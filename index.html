@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Art QR turns any link or photo into a scannable, artistic QR code — free, private, 100% in your browser." />
+    <meta name="theme-color" content="#6f5bb5" />
+    <title>Art QR — turn your QR code into art</title>
+  </head>
+  <body>
+    <div id="app">
+      <header class="site-header">
+        <a class="brand" href="#top">
+          <span class="brand-mark" aria-hidden="true"></span>
+          Art QR
+        </a>
+        <a class="header-link" href="#editor">Open editor</a>
+      </header>
+
+      <main>
+        <section class="landing" id="top">
+          <div class="landing-copy">
+            <h1>Turn your QR code <br />into art.</h1>
+            <p class="lede">
+              Drop in any photo and a link — get back a beautiful, fully scannable QR
+              code. No accounts, no watermark, nothing ever leaves your browser.
+            </p>
+            <div class="landing-actions">
+              <button class="btn btn-primary" id="make-yours-btn" type="button">Make yours</button>
+              <div class="layout-toggle" role="group" aria-label="Gallery animation layout">
+                <button class="toggle-option is-active" type="button" data-layout="spiral" aria-pressed="true">Spiral</button>
+                <button class="toggle-option" type="button" data-layout="orbit" aria-pressed="false">Orbit</button>
+              </div>
+            </div>
+          </div>
+          <div class="gallery-stage" id="gallery-stage" aria-hidden="true"></div>
+        </section>
+
+        <section class="editor" id="editor">
+          <h2>Make your art QR code</h2>
+          <p class="section-sub">Upload a photo, paste a link, and tune it until it looks right — it updates live.</p>
+
+          <div class="editor-grid">
+            <div class="editor-panel">
+              <div class="field-group">
+                <label for="text-input">Link or text to encode</label>
+                <input id="text-input" type="text" placeholder="https://example.com" autocomplete="off" spellcheck="false" />
+                <p class="qr-info" id="qr-info" aria-live="polite"></p>
+                <p class="qr-hint" id="qr-hint" aria-live="polite" hidden></p>
+                <p class="qr-error" id="qr-error" role="alert" hidden></p>
+              </div>
+
+              <div class="field-group">
+                <label id="dropzone-label">Image</label>
+                <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-labelledby="dropzone-label">
+                  <p>Drag &amp; drop an image, or click to choose a file</p>
+                  <input id="file-input" type="file" accept="image/*" class="visually-hidden" aria-label="Upload an image" />
+                </div>
+                <button class="btn btn-ghost" id="sample-btn" type="button">Try a sample image</button>
+              </div>
+
+              <div class="field-group">
+                <span class="group-label">Style</span>
+                <div class="segmented" role="group" aria-label="Style preset" id="preset-group">
+                  <button class="toggle-option is-active" type="button" data-preset="none" aria-pressed="true">Plain</button>
+                  <button class="toggle-option" type="button" data-preset="card" aria-pressed="false">Clean card</button>
+                  <button class="toggle-option" type="button" data-preset="stamp" aria-pressed="false">Stamp</button>
+                </div>
+              </div>
+
+              <div class="field-group">
+                <span class="group-label">Dot shape</span>
+                <div class="segmented" role="group" aria-label="Dot shape" id="dot-shape-group">
+                  <button class="toggle-option is-active" type="button" data-dot-shape="circle" aria-pressed="true">Circle</button>
+                  <button class="toggle-option" type="button" data-dot-shape="square" aria-pressed="false">Square</button>
+                </div>
+              </div>
+
+              <div class="sliders" id="sliders"></div>
+
+              <label class="checkbox-row">
+                <input type="checkbox" id="grayscale-checkbox" />
+                Grayscale image
+              </label>
+
+              <button class="btn btn-ghost" id="reset-all-btn" type="button">Reset all sliders</button>
+            </div>
+
+            <div class="editor-preview">
+              <div class="preview-canvas-wrap">
+                <canvas id="preview-canvas" width="400" height="400" role="img" aria-label="Live preview of your art QR code"></canvas>
+              </div>
+              <div class="export-row">
+                <label for="scale-select">Export size</label>
+                <select id="scale-select">
+                  <option value="1">1×</option>
+                  <option value="2" selected>2×</option>
+                  <option value="4">4×</option>
+                  <option value="6">6×</option>
+                  <option value="8">8×</option>
+                </select>
+                <span class="export-dims" id="export-dims"></span>
+              </div>
+              <button class="btn btn-primary btn-block" id="download-btn" type="button">Download PNG</button>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <p>Free · runs in your browser · no account · no watermark</p>
+        <a href="https://github.com/PranayMendhe/art-qr" target="_blank" rel="noopener noreferrer">View on GitHub</a>
+      </footer>
+    </div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
