@@ -5,7 +5,7 @@
  */
 import { generateQRMatrix, longLinkHint } from './qr.ts';
 import { renderArtQR, type DotShape, type ImageAdjustments, type ImageTransform, type RenderOptions, type StylePreset } from './render.ts';
-import { drawProceduralImage, PROCEDURAL_VARIANTS, type ProceduralContext } from './procedural.ts';
+import { drawProceduralImage, type ProceduralContext, type ProceduralVariant } from './procedural.ts';
 
 interface SliderState {
   zoom: number;
@@ -35,8 +35,8 @@ const SLIDER_CONFIGS: SliderConfig[] = [
   { key: 'brightness', label: 'Brightness', min: 50, max: 150, step: 1, default: 100, toRenderValue: (v) => v },
   { key: 'contrast', label: 'Contrast', min: 50, max: 150, step: 1, default: 100, toRenderValue: (v) => v },
   { key: 'saturation', label: 'Saturation', min: 0, max: 200, step: 1, default: 100, toRenderValue: (v) => v },
-  { key: 'dotSize', label: 'Dot size', min: 20, max: 60, step: 1, default: 38, toRenderValue: (v) => v / 100 },
-  { key: 'blend', label: 'Image strength', min: 10, max: 90, step: 1, default: 55, toRenderValue: (v) => v / 100 },
+  { key: 'dotSize', label: 'Dot size', min: 20, max: 60, step: 1, default: 46, toRenderValue: (v) => v / 100 },
+  { key: 'blend', label: 'Image strength', min: 10, max: 90, step: 1, default: 18, toRenderValue: (v) => v / 100 },
 ];
 
 const DEFAULT_SLIDERS: SliderState = SLIDER_CONFIGS.reduce((acc, cfg) => {
@@ -67,8 +67,13 @@ function loadImageFile(file: File): Promise<ImageSource> {
   });
 }
 
+// Curated for the "Try a sample image" button: colorful, full-tone variants
+// only — the flat/dark/noisy ones in PROCEDURAL_VARIANTS read as a bad photo
+// pick, not a stylistic choice.
+const SAMPLE_VARIANTS: ProceduralVariant[] = ['gradient', 'blobs', 'sunset', 'circles', 'stripes'];
+
 function makeSampleImage(): ImageSource {
-  const variant = PROCEDURAL_VARIANTS[Math.floor(Math.random() * PROCEDURAL_VARIANTS.length)];
+  const variant = SAMPLE_VARIANTS[Math.floor(Math.random() * SAMPLE_VARIANTS.length)];
   const size = 480;
   const canvas = document.createElement('canvas');
   canvas.width = size;

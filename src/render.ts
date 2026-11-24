@@ -131,9 +131,9 @@ export interface RenderResult {
 
 const DEFAULT_DARK = '#171321';
 const DEFAULT_LIGHT = '#ffffff';
-const MIN_DOT_RATIO = 0.22;
+const MIN_DOT_RATIO = 0.24;
 const MAX_DOT_RATIO = 0.62;
-const MIN_BLEND = 0.08;
+const MIN_BLEND = 0.12;
 
 function parseColor(hex: string): [number, number, number] {
   const h = hex.replace('#', '');

@@ -63,6 +63,12 @@ const DEFAULT_SLIDERS = { dotSizeRatio: 0.38, blendStrength: 0.55, transform: DE
 const SMALL_DOT_SLIDERS = { dotSizeRatio: 0.2, blendStrength: 0.55, transform: DEFAULT_TRANSFORM };
 const HIGH_ZOOM_SLIDERS = { dotSizeRatio: 0.38, blendStrength: 0.55, transform: { zoom: 2.4, offsetX: 0.3, offsetY: -0.25 } };
 
+// Mirrors the editor's actual default slider values (src/editor.ts
+// SLIDER_CONFIGS): a gentle image tint plus a moderate halftone dot, rather
+// than a heavy blend — this combo must stay scannable since it's what every
+// first-time user sees.
+const APP_DEFAULT_SLIDERS = { dotSizeRatio: 0.46, blendStrength: 0.18, transform: DEFAULT_TRANSFORM };
+
 describe('renderArtQR -> scan round trip', () => {
   const images: Array<{ name: string; canvas: Canvas }> = [
     { name: 'busy (high contrast)', canvas: busyImage },
@@ -78,6 +84,28 @@ describe('renderArtQR -> scan round trip', () => {
       preset: 'none',
       scale: 2,
       ...DEFAULT_SLIDERS,
+      image: canvas,
+    });
+  });
+
+  it.each(images)('decodes for the $name source image with the app defaults at 1x', ({ canvas }) => {
+    expectDecodes({
+      label: 'app-defaults-1x',
+      text: SHORT_URL,
+      preset: 'none',
+      scale: 1,
+      ...APP_DEFAULT_SLIDERS,
+      image: canvas,
+    });
+  });
+
+  it.each(images)('decodes for the $name source image with the app defaults at 4x', ({ canvas }) => {
+    expectDecodes({
+      label: 'app-defaults-4x',
+      text: SHORT_URL,
+      preset: 'none',
+      scale: 4,
+      ...APP_DEFAULT_SLIDERS,
       image: canvas,
     });
   });
